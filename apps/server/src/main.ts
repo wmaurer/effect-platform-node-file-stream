@@ -61,22 +61,8 @@ const serve = Http.router.empty.pipe(
             // );
             // return yield* _(Http.response.json({ hello: 'world' }));
             return Http.response.empty();
-        }),
+        }).pipe(Effect.scoped),
     ),
-    // Http.router.post(
-    //     '/upload',
-    //     Effect.gen(function* (_) {
-    //         const data = yield* _(
-    //             Http.request.schemaFormData(
-    //                 Schema.struct({
-    //                     files: Http.formData.filesSchema,
-    //                 }),
-    //             ),
-    //         );
-    //         console.log('got files', data.files);
-    //         return Http.response.empty();
-    //     }),
-    // ),
     Http.server.serve(Http.middleware.logger),
 );
 
