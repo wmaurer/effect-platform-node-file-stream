@@ -1,0 +1,79 @@
+{
+    "name": "react-client",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/react-client/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nx/vite:build",
+            "outputs": ["{options.outputPath}"],
+            "defaultConfiguration": "production",
+            "options": {
+                "outputPath": "dist/apps/react-client"
+            },
+            "configurations": {
+                "development": {
+                    "mode": "development"
+                },
+                "production": {
+                    "mode": "production"
+                }
+            }
+        },
+        "serve": {
+            "executor": "@nx/vite:dev-server",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "react-client:build",
+                "proxyConfig": "apps/react-client/proxy.conf.json"
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "react-client:build:development",
+                    "hmr": true
+                },
+                "production": {
+                    "buildTarget": "react-client:build:production",
+                    "hmr": false
+                }
+            }
+        },
+        "preview": {
+            "executor": "@nx/vite:preview-server",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "react-client:build"
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "react-client:build:development"
+                },
+                "production": {
+                    "buildTarget": "react-client:build:production"
+                }
+            }
+        },
+        "test": {
+            "executor": "@nx/vite:test",
+            "outputs": ["{options.reportsDirectory}"],
+            "options": {
+                "passWithNoTests": true,
+                "reportsDirectory": "../../coverage/apps/react-client"
+            }
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["apps/react-client/**/*.{ts,tsx,js,jsx}"]
+            }
+        },
+        "serve-static": {
+            "executor": "@nx/web:file-server",
+            "options": {
+                "buildTarget": "react-client:build"
+            }
+        }
+    },
+    "tags": []
+}
